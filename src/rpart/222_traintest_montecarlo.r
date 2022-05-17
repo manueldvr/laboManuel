@@ -60,7 +60,7 @@ ArbolEstimarGanancia  <- function( semilla, param_basicos )
 #cargo los datos
 setwd("/Users/manuelvargas/Documents/ITBA-Maestria- Especialización en Ciencia de Datos/clases/Mineria de Datos/DATOS")  #Establezco el Working Directory
 
-dataset  <- fread("./paquete_premium_202011.csv")
+dataset  <- fread("./datasets/paquete_premium_202011.csv")
 
 param_basicos  <- list( "cp"=         -0.5,  #complejidad minima
                         "minsplit"=  900,  #minima cantidad de registros en un nodo para hacer el split
@@ -76,7 +76,7 @@ ganancias  <- mcmapply( ArbolEstimarGanancia,
                         ksemillas,   #paso el vector de semillas, que debe ser el primer parametro de la funcion ArbolEstimarGanancia
                         MoreArgs= list( param_basicos),  #aqui paso el segundo parametro
                         SIMPLIFY= FALSE,
-                        mc.cores= 1 )  #se puede subir a 5 si posee Linux o Mac OS
+                        mc.cores= 4 )  #se puede subir a 5 si posee Linux o Mac OS
 
 #muestro la lista de las ganancias en testing para la particion realizada con cada semilla
 ganancias

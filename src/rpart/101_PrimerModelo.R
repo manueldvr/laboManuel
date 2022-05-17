@@ -11,16 +11,16 @@ require("rpart.plot")
 setwd("/Users/manuelvargas/Documents/ITBA-Maestria- Especialización en Ciencia de Datos/clases/Mineria de Datos/DATOS")  #Establezco el Working Directory
 
 #cargo los datos de 202011 que es donde voy a ENTRENAR el modelo
-dtrain  <- fread("./paquete_premium_202011.csv")
+dtrain  <- fread("./datasets/paquete_premium_202011.csv")
 
 #genero el modelo,  aqui se construye el arbol
 modelo  <- rpart("clase_ternaria ~ .",  #quiero predecir clase_ternaria a partir de el resto de las variables
                  data = dtrain,
                  xval=0,
                  cp=        -0.3,   #esto significa no limitar la complejidad de los splits
-                 minsplit=  2,     #minima cantidad de registros para que se haga el split
-                 minbucket=  1,     #tamaño minimo de una hoja
-                 maxdepth=   30 )    #profundidad maxima del arbol
+                 minsplit=  1000,     #minima cantidad de registros para que se haga el split
+                 minbucket=  4,     #tamaño minimo de una hoja
+                 maxdepth=   18 )    #profundidad maxima del arbol
 
 
 #grafico el arbol
@@ -53,5 +53,5 @@ dir.create( "./labo/exp/" )
 dir.create( "./labo/exp/KA2001" ) 
 
 fwrite( entrega, 
-        file= "./labo/exp/KA2001/K101_001.csv", 
+        file= "./labo/exp/KA2001/K101_009_-03-18-1000-4.csv", 
         sep= "," )
