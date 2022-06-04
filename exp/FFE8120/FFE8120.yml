@@ -5,7 +5,7 @@ googlecloud:
 
 
 experiment:
-  script: "src/completo/z912_FE_desborde.r"
+  script: "src/completo/912_FE_desborde.r"
   restart: FALSE
   name: "exp"
   requires: [ "DT0001" ]
@@ -16,12 +16,12 @@ param:
 
   corregir: TRUE    #se se corrige los campos/foto_mes  MALOS
   variablesdrift: [] #variables que se eliminan porque estan mal en el futuro
-  
+
   variablesmanuales: FALSE
 
   acumulavars: FALSE   #a lo nuevo lo va aplicando
 
-  tendenciaYmuchomas: 
+  tendenciaYmuchomas:
     correr: TRUE #Great power comes with great responsability
     ventana: 6
     tendencia: TRUE
