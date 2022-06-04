@@ -17,7 +17,7 @@ param:
   corregir: TRUE    #se se corrige los campos/foto_mes  MALOS
   variablesdrift: [] #variables que se eliminan porque estan mal en el futuro
 
-  variablesmanuales: FALSE
+  variablesmanuales: TRUE  # para utilizar la variables inventadas de FE.
 
   acumulavars: FALSE   #a lo nuevo lo va aplicando
 
@@ -27,7 +27,7 @@ param:
     tendencia: TRUE
     minimo:    FALSE
     maximo:    FALSE
-    promedio:  TRUE
+    promedio:  FALSE
     ratioavg:  FALSE
     ratiomax:  FALSE
 
