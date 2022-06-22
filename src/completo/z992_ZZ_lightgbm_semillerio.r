@@ -1,14 +1,4 @@
-#Ha llegado la hora de la felicidad, al fin el semillerio
-#  (lamentablemente aun no es el poder total, ya que no es el estado del arte : "Hibridacion de Semillerios"  )
-
-# demora en correr MUCHO MAS que el ZZ original, ya que se construyen  PARAM$semillerio  modelos  ( 50 por default )
-
-#Generacion del Final Model, Scoring y Kaggle   3-in-one
-#extraigo automaticamente los mejores parametros de la Bayesian Optimization, del archivo BOlog.txt
-#genero el modelo entrenando en los datos train_final  PERO  ensamblando al cambiar las semillas
-# debe quedar MUY CLARO  que el entrenamiento final  se hace sobre un dataset DISTINTO a donde hice la  B.O.
-#   en particular si a la B.O. la hice sobre un dataset con undersampling de los CONTINUA, ahora entreno considerando TODOS los CONTINUA
-# ya NO hago Bayesian Optimization
+#Semillerio que tiene en cuenta el  ratio_num_leaves
 
 #limpio la memoria
 rm( list=ls() )  #remove all objects
@@ -100,13 +90,18 @@ for( i in  1:PARAM$modelos_qty )
   iteracion_bayesiana  <- parametros$iteracion_bayesiana
   ganancia  <- parametros$ganancia
 
+  #trafo  ratio_num_leaves
+  hojas_maximo  <- nrow( dtrain ) / parametros$min_data_in_leaf
+  parametros$num_leaves  <-   as.integer( parametros$ratio_num_leaves * hojas_maximo )
+  parametros$ratio_num_leaves  <- NULL
+
   #elimino los parametros que no son de lightgbm
   parametros$fecha       <- NULL
   parametros$prob_corte  <- NULL
   parametros$estimulos   <- NULL
   parametros$ganancia    <- NULL
   parametros$iteracion_bayesiana  <- NULL
-  
+
   #genero el modelo entrenando en los datos finales
   set.seed( parametros$seed )
   modelo_final  <- lightgbm( data= dtrain,
@@ -204,8 +199,8 @@ for( i in  1:PARAM$modelos_qty )
      parametros$seed  <- vsemilla
      set.seed( parametros$seed )
      modelo_final_semillerio  <- lightgbm( data= dtrain,
-                                param=  parametros,
-                                verbose= -100 )
+                                           param=  parametros,
+                                           verbose= -100 )
 
     #genero la prediccion como ranking
     prediccion_semillerio  <- frank( predict( modelo_final_semillerio, data.matrix( dfuture ) ),
